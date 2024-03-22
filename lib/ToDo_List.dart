@@ -18,7 +18,12 @@ class TareasPantalla extends StatefulWidget {
 }
 
 class _TareasPantallaState extends State<TareasPantalla> {
-  List<String> tareas = ['Tarea Numero 1', 'Tarea test 2', 'Tarea esta es la 3'];
+  List<Map<String, dynamic>> tareas = [
+    {'nombre': 'Tarea Numero 1', 'descripcion': '', 'completada': false},
+    {'nombre': 'Tarea test 2', 'descripcion': '', 'completada': false},
+    {'nombre': 'Tarea esta es la 3', 'descripcion': '', 'completada': false},
+  ];
+
   final _formKey = GlobalKey<FormState>();
   String _nombreTarea = '';
   String _descripcionTarea = '';
@@ -27,12 +32,22 @@ class _TareasPantallaState extends State<TareasPantalla> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       setState(() {
-        tareas.add('$_nombreTarea - $_descripcionTarea');
+        tareas.add({
+          'nombre': _nombreTarea,
+          'descripcion': _descripcionTarea,
+          'completada': false,
+        });
         _nombreTarea = '';
         _descripcionTarea = '';
       });
       Navigator.of(context).pop();
     }
+  }
+
+  void _marcarCompletada(int index) {
+    setState(() {
+      tareas[index]['completada'] = !tareas[index]['completada'];
+    });
   }
 
   Widget build(BuildContext context) {
@@ -44,7 +59,21 @@ class _TareasPantallaState extends State<TareasPantalla> {
         itemCount: tareas.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(tareas[index]),
+            leading: Checkbox(
+              value: tareas[index]['completada'],
+              onChanged: (value) {
+                _marcarCompletada(index);
+              },
+            ),
+            title: Text(
+              tareas[index]['nombre'],
+              style: TextStyle(
+                decoration: tareas[index]['completada']
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+              ),
+            ),
+            subtitle: Text(tareas[index]['descripcion']),
           );
         },
       ),
@@ -100,7 +129,7 @@ class _TareasPantallaState extends State<TareasPantalla> {
                   ),
                   ElevatedButton(
                     onPressed: _agregarTarea,
-                    child: Text('Aceptar'),
+                    child: Text('Agregar'),
                   ),
                 ],
               );
