@@ -100,7 +100,7 @@ class _TareasPantallaState extends State<TareasPantalla> {
                   ),
                   ElevatedButton(
                     onPressed: _agregarTarea,
-                    child: Text('Agregar'),
+                    child: Text('Aceptar'),
                   ),
                 ],
               );
