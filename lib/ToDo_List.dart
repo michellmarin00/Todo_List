@@ -112,7 +112,8 @@ class _TareasPantallaState extends State<TareasPantalla> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: ElevatedButton(
         onPressed: () {
           showDialog(
             context: context,
@@ -171,7 +172,7 @@ class _TareasPantallaState extends State<TareasPantalla> {
             },
           );
         },
-        child: Icon(Icons.add),
+        child: Text('Agregar Tarea'),
       ),
     );
   }
