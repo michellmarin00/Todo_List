@@ -5,7 +5,7 @@ void main() {
 }
 
 class AppMisTareas extends StatelessWidget {
-  const AppMisTareas({super.key});
+  const AppMisTareas({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,9 @@ class PantallaTareas extends StatefulWidget {
 
 class _PantallaTareasState extends State<PantallaTareas> {
   List<Map<String, dynamic>> tareas = [
-    {'nombre': 'Tarea Número 1', 'descripcion': 'Descripción de la Tarea Número 1', 'completada': false},
-    {'nombre': 'Tarea de prueba 2', 'descripcion': 'Descripción de la Tarea de prueba 2', 'completada': false},
-    {'nombre': 'Tarea esta es la 3', 'descripcion': 'Descripción de la Tarea esta es la 3', 'completada': false},
+    {'nombre': 'Tarea Número 1', 'descripcion': 'esto es prueba', 'completada': false},
+    {'nombre': 'Tarea de prueba 2', 'descripcion': 'test 2', 'completada': false},
+    {'nombre': 'Tarea esta es la 3', 'descripcion': 'uno mas uno ', 'completada': false},
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -112,8 +112,9 @@ class _PantallaTareasState extends State<PantallaTareas> {
           ),
         ],
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: tareas.length,
+        separatorBuilder: (BuildContext context, int index) => Divider(),
         itemBuilder: (context, index) {
           return ListTile(
             leading: Checkbox(
