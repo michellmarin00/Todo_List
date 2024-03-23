@@ -10,7 +10,7 @@ class AppMisTareas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // Aquí se establece el debugShowCheckedModeBanner en false
+      debugShowCheckedModeBanner: false,
       title: 'Lista de Tareas',
       home: PantallaTareas(),
     );
@@ -24,9 +24,9 @@ class PantallaTareas extends StatefulWidget {
 
 class _PantallaTareasState extends State<PantallaTareas> {
   List<Map<String, dynamic>> tareas = [
-    {'nombre': 'Tarea Número 1', 'descripcion': '', 'completada': false},
-    {'nombre': 'Tarea de prueba 2', 'descripcion': '', 'completada': false},
-    {'nombre': 'Tarea esta es la 3', 'descripcion': '', 'completada': false},
+    {'nombre': 'Tarea Número 1', 'descripcion': 'Descripción de la Tarea Número 1', 'completada': false},
+    {'nombre': 'Tarea de prueba 2', 'descripcion': 'Descripción de la Tarea de prueba 2', 'completada': false},
+    {'nombre': 'Tarea esta es la 3', 'descripcion': 'Descripción de la Tarea esta es la 3', 'completada': false},
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -130,7 +130,12 @@ class _PantallaTareasState extends State<PantallaTareas> {
                     : TextDecoration.none,
               ),
             ),
-            subtitle: Text(tareas[index]['descripcion']),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(tareas[index]['descripcion']),
+              ],
+            ),
             trailing: IconButton(
               icon: Icon(Icons.delete, color: Colors.red),
               onPressed: () {
