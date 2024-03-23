@@ -138,7 +138,7 @@ class _PantallaTareasState extends State<PantallaTareas> {
               ],
             ),
             trailing: IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
+              icon: Icon(Icons.delete, color: Color.fromARGB(255, 239, 129, 121)),
               onPressed: () {
                 _eliminarTarea(index);
               },
