@@ -8,19 +8,19 @@ class AppMisTareas extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lista de Tareas',
-      home: TareasPantalla(),
+      home: PantallaTareas(),
     );
   }
 }
 
-class TareasPantalla extends StatefulWidget {
-  _TareasPantallaState createState() => _TareasPantallaState();
+class PantallaTareas extends StatefulWidget {
+  _PantallaTareasState createState() => _PantallaTareasState();
 }
 
-class _TareasPantallaState extends State<TareasPantalla> {
+class _PantallaTareasState extends State<PantallaTareas> {
   List<Map<String, dynamic>> tareas = [
-    {'nombre': 'Tarea Numero 1', 'descripcion': '', 'completada': false},
-    {'nombre': 'Tarea test 2', 'descripcion': '', 'completada': false},
+    {'nombre': 'Tarea Número 1', 'descripcion': '', 'completada': false},
+    {'nombre': 'Tarea de prueba 2', 'descripcion': '', 'completada': false},
     {'nombre': 'Tarea esta es la 3', 'descripcion': '', 'completada': false},
   ];
 
@@ -78,11 +78,31 @@ class _TareasPantallaState extends State<TareasPantalla> {
       },
     );
   }
-
+// lista tareas completadas
+  void _mostrarTareasCompletadas() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PantallaListaTareasCompletadas(
+          titulo: 'Tareas Completadas',
+          tareas: obtenerTareasCompletadas(),
+        ),
+      ),
+    );
+  }
+  List<Map<String, dynamic>> obtenerTareasCompletadas() {
+    return tareas.where((tarea) => tarea['completada'] == true).toList();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de Tareas'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.done),
+            onPressed: _mostrarTareasCompletadas,
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: tareas.length,
@@ -173,6 +193,29 @@ class _TareasPantallaState extends State<TareasPantalla> {
           );
         },
         child: Text('Agregar Tarea'),
+      ),
+    );
+  }
+}
+class PantallaListaTareasCompletadas extends StatelessWidget {
+  final String titulo;
+  final List<Map<String, dynamic>> tareas;
+
+  PantallaListaTareasCompletadas({required this.titulo, required this.tareas});
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(titulo),
+      ),
+      body: ListView.builder(
+        itemCount: tareas.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(tareas[index]['nombre']),
+            subtitle: Text(tareas[index]['descripcion']),
+          );
+        },
       ),
     );
   }
