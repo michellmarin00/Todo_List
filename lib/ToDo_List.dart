@@ -51,9 +51,32 @@ class _TareasPantallaState extends State<TareasPantalla> {
   }
 
   void _eliminarTarea(int index) {
-    setState(() {
-      tareas.removeAt(index);
-    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Eliminar tarea'),
+          content: Text('¿Está seguro de que desea eliminar esta tarea?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('No'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  tareas.removeAt(index);
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Sí'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget build(BuildContext context) {
