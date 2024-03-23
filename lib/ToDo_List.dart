@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(AppMisTareas());
+  runApp(const AppMisTareas());
 }
 
 class AppMisTareas extends StatelessWidget {
+  const AppMisTareas({super.key});
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // Aquí se establece el debugShowCheckedModeBanner en false
       title: 'Lista de Tareas',
       home: PantallaTareas(),
     );
@@ -14,6 +18,7 @@ class AppMisTareas extends StatelessWidget {
 }
 
 class PantallaTareas extends StatefulWidget {
+  @override
   _PantallaTareasState createState() => _PantallaTareasState();
 }
 
@@ -78,7 +83,7 @@ class _PantallaTareasState extends State<PantallaTareas> {
       },
     );
   }
-// lista tareas completadas
+
   void _mostrarTareasCompletadas() {
     Navigator.push(
       context,
@@ -90,9 +95,12 @@ class _PantallaTareasState extends State<PantallaTareas> {
       ),
     );
   }
+
   List<Map<String, dynamic>> obtenerTareasCompletadas() {
     return tareas.where((tarea) => tarea['completada'] == true).toList();
   }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -197,12 +205,14 @@ class _PantallaTareasState extends State<PantallaTareas> {
     );
   }
 }
+
 class PantallaListaTareasCompletadas extends StatelessWidget {
   final String titulo;
   final List<Map<String, dynamic>> tareas;
 
   PantallaListaTareasCompletadas({required this.titulo, required this.tareas});
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
