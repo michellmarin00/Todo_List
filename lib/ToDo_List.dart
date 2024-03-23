@@ -64,37 +64,27 @@ class _TareasPantallaState extends State<TareasPantalla> {
       body: ListView.builder(
         itemCount: tareas.length,
         itemBuilder: (context, index) {
-          return Dismissible(
-            key: Key(tareas[index]['nombre']),
-            direction: DismissDirection.endToStart,
-            background: Container(
-              color: Colors.red,
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: const Icon(
-                Icons.delete,
-                color: Colors.white,
+          return ListTile(
+            leading: Checkbox(
+              value: tareas[index]['completada'],
+              onChanged: (value) {
+                _marcarCompletada(index);
+              },
+            ),
+            title: Text(
+              tareas[index]['nombre'],
+              style: TextStyle(
+                decoration: tareas[index]['completada']
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
               ),
             ),
-            onDismissed: (direction) {
-              _eliminarTarea(index);
-            },
-            child: ListTile(
-              leading: Checkbox(
-                value: tareas[index]['completada'],
-                onChanged: (value) {
-                  _marcarCompletada(index);
-                },
-              ),
-              title: Text(
-                tareas[index]['nombre'],
-                style: TextStyle(
-                  decoration: tareas[index]['completada']
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                ),
-              ),
-              subtitle: Text(tareas[index]['descripcion']),
+            subtitle: Text(tareas[index]['descripcion']),
+            trailing: IconButton(
+              icon: Icon(Icons.delete, color: Colors.red),
+              onPressed: () {
+                _eliminarTarea(index);
+              },
             ),
           );
         },
