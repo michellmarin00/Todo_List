@@ -50,6 +50,12 @@ class _TareasPantallaState extends State<TareasPantalla> {
     });
   }
 
+  void _eliminarTarea(int index) {
+    setState(() {
+      tareas.removeAt(index);
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -58,22 +64,38 @@ class _TareasPantallaState extends State<TareasPantalla> {
       body: ListView.builder(
         itemCount: tareas.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading: Checkbox(
-              value: tareas[index]['completada'],
-              onChanged: (value) {
-                _marcarCompletada(index);
-              },
-            ),
-            title: Text(
-              tareas[index]['nombre'],
-              style: TextStyle(
-                decoration: tareas[index]['completada']
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
+          return Dismissible(
+            key: Key(tareas[index]['nombre']),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: const Icon(
+                Icons.delete,
+                color: Colors.white,
               ),
             ),
-            subtitle: Text(tareas[index]['descripcion']),
+            onDismissed: (direction) {
+              _eliminarTarea(index);
+            },
+            child: ListTile(
+              leading: Checkbox(
+                value: tareas[index]['completada'],
+                onChanged: (value) {
+                  _marcarCompletada(index);
+                },
+              ),
+              title: Text(
+                tareas[index]['nombre'],
+                style: TextStyle(
+                  decoration: tareas[index]['completada']
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                ),
+              ),
+              subtitle: Text(tareas[index]['descripcion']),
+            ),
           );
         },
       ),
